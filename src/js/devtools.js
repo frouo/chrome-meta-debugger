@@ -112,7 +112,18 @@
           }
           switch (attributeMap[j].keyNameBy) {
             case 'tagName':
-              item.key = item.tag
+              const tag = item.tag
+              if (tag === 'title') {
+                if (item.value.length < 50) {
+                  item.key = tag + ' ❌ ' + item.value.length + ' too short (50:70)'
+                } else if (item.value.length > 70) {
+                  item.key = tag + ' ❌ ' + item.value.length + ' too big (50:70)'
+                } else {
+                  item.key = tag + ' 👍 ' + item.value.length + ' in (50:70)'
+                }
+              } else {
+                item.key = tag
+              }
               break
             case 'tagValue':
               item.key = headTags[i].textContent
@@ -121,7 +132,18 @@
               item.key = headTags[i].attributes[attributeMap[j].keyAttribute].name
               break
             case 'attrValue':
-              item.key = headTags[i].attributes[attributeMap[j].keyAttribute].value
+              const value = headTags[i].attributes[attributeMap[j].keyAttribute].value
+              if (value === 'description') {
+                if (item.value.length < 110) {
+                  item.key = value + ' ❌ ' + item.value.length + ' too short (110:160)'
+                } else if (item.value.length > 160) {
+                  item.key = value + ' ❌ ' + item.value.length + ' too big (110:160)'
+                } else {
+                  item.key = value + ' 👍 ' + item.value.length + ' in (110:160)'
+                }
+              } else {
+                item.key = value
+              }
               break
           }
           result.push(item)
